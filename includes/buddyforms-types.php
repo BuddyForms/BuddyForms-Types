@@ -11,19 +11,12 @@
 
 function buddyforms_types_admin_settings_sidebar_metabox($form, $selected_form_slug){
 
-    $form->addElement(new Element_HTML('
-		<div class="accordion-group postbox">
-			<div class="accordion-heading"><p class="accordion-toggle" data-toggle="collapse" data-parent="#accordion_'.$selected_form_slug.'" href="#accordion_'.$selected_form_slug.'_wp_types_options">WP Types</p></div>
-		    <div id="accordion_'.$selected_form_slug.'_wp_types_options" class="accordion-body collapse">
-				<div class="accordion-inner">'));
+    $form->addElement(new Element_HTML( bf_form_ellement_accordion_start($selected_form_slug, __('WP Types','buddyforms')) ));
 
-    $form->addElement(new Element_HTML('<p><a href="wp-types/'.$selected_form_slug.'" class="action">WP Types</a></p>'));
+    $form->addElement(new Element_HTML('<p><a href="#" data-fieldtype="wp-types" class="bf_add_element_action">WP Types</a></p>'));
 
 
-    $form->addElement(new Element_HTML('
-				</div>
-			</div>
-		</div>'));
+    $form->addElement(new Element_HTML( bf_form_ellement_accordion_end() ));
 
     return $form;
 }
@@ -35,7 +28,6 @@ add_filter('buddyforms_admin_settings_sidebar_metabox','buddyforms_types_admin_s
  */
 function buddyforms_types_create_new_form_builder_form_element($form_fields, $form_slug, $field_type, $field_id){
     global $field_position;
-    $buddyforms_options = get_option('buddyforms_options');
 
     switch ($field_type) {
 
@@ -45,7 +37,7 @@ function buddyforms_types_create_new_form_builder_form_element($form_fields, $fo
             echo '<pre>';
             print_r($boom);
             echo '</pre>';
-            $form_fields['full']['html']		= new Element_HTML('Hallo');
+            $form_fields['general']['html']		= new Element_HTML('Hallo');
             break;
 
     }
@@ -66,7 +58,7 @@ function buddyforms_types_create_frontend_form_element($form, $form_args){
         return $form;
 
     switch ($customfield['type']) {
-        case 'Review-Logic':
+        case 'review-logic':
 
             $post = get_post($post_id);
 
